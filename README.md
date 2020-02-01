@@ -45,9 +45,68 @@
 	3. Data Source -- DBMS
 
 	**Layerd Architecture(in Back End)**
-	1. UI Layer
-	2. Application Layer
+	1. UI Layer(어플리케이션 동작에 원천적인 작업에 집중할 수 있도록 처리)
+	=> Interfaces(controller)
+
+	2. Application Layer => 웹에 대한 처리를 담당함(웹이 어떻게 작동하는지)
+	=> application(restaurantService)
+
+			Restaurant restaurant = restaurantRepository.findById(id);
+
+			List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
+
+			restaurant.setMenuItems(menuItems);
+
+	와 같이 Controller 에서 수행하는 로직이 복잡해 짐으로 인해 Application Layer를 담당할 클래스인 Service 클래스를 생성하여 그 내부에서 리포지토리를 통한 작업이 일어날 수 있도록 처리.
+
 	3. Domain Layer
+	=> domains(entity,repository)
+	
 	4. Infrastructure Layer
 	
 	: 상위 레이어는 하위 레이어들을 사용하지만, 하위 레이어는 상위 레이어에 접근하고 사용할 수 없다.
+	
+* 테스트 중심 개발(== "목표 주도 개발", "사용자 중심 개발", "인터페이스 중심 개발")
+
+	* 목적
+	
+	: 올바르게 작동하는 코드를 개발,깔끔한 코드 생성하기 위해
+	=> Refactoring
+	
+	* **올바르게 작동하는 코드**
+	
+	: 이를 달성하기 위해서, Test Code가 중심이 되는 개발이 되어야 한다.
+
+	* TDD Cycle
+		1. Red
+		2. Green
+		3. Refactoring
+
+* Rest API (REPresentational State Transfer)
+
+: 표현 상태를 전달하는 것.
+
+	* Resource를 처리하는 방식
+	
+	 Resource 흐름 -> HTTP 명령
+	1. Create -> Post 
+	2. Read -> Get
+	3. Update -> Put / Patch
+	4. Delete -> Delete
+	
+	* URI / URL
+	
+	: 리소스를 지정할 떄 사용함.
+	
+	* Resource는
+	
+	Collection과 Member로 구분
+	
+		* Collection
+		
+		: Read(List), Create
+		
+		* Member
+		
+		: Read(Detail), Update, Delete
+	
